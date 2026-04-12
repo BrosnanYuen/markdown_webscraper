@@ -29,6 +29,7 @@ def build_config(tmp_path: Path) -> ScraperConfig:
         remove_header_footer=True,
         markdown_convert=True,
         time_delay=0.0,
+        total_timeout=10.0,
     )
 
 

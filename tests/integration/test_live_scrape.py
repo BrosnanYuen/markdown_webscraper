@@ -27,6 +27,7 @@ def test_integration_example_com(tmp_path) -> None:
         remove_header_footer=True,
         markdown_convert=True,
         time_delay=1,
+        total_timeout=180,
     )
 
     stats = WebsiteScraper(config).run()
@@ -54,6 +55,7 @@ def test_integration_allaboutcircuits_textbook_recursive(tmp_path) -> None:
         remove_header_footer=True,
         markdown_convert=True,
         time_delay=1,
+        total_timeout=180,
     )
 
     stats = WebsiteScraper(config).run()

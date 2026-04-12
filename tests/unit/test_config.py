@@ -14,7 +14,8 @@ def test_load_config_strips_empty_urls(tmp_path: Path) -> None:
   "individual_websites": ["https://example.com/", ""],
   "remove_header_footer": true,
   "markdown_convert": false,
-  "time_delay": 1
+  "time_delay": 1,
+  "total_timeout": 180
 }
 """.strip(),
         encoding="utf-8",
@@ -29,3 +30,4 @@ def test_load_config_strips_empty_urls(tmp_path: Path) -> None:
     assert config.remove_header_footer is True
     assert config.markdown_convert is False
     assert config.time_delay == 1.0
+    assert config.total_timeout == 180.0

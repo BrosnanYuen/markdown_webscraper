@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import time
+import requests
+import signal
 from collections import deque
 from dataclasses import dataclass
 from pathlib import Path
@@ -38,9 +40,17 @@ class WebsiteScraper:
         self.stats = CrawlStats()
         self._visited: set[str] = set()
 
+    def _handle_timeout(self, signum, frame):
+        print("\nTotal timeout reached. Quitting...")
+        exit(0)
+
     def run(self) -> CrawlStats:
         self.config.raw_html_dir.mkdir(parents=True, exist_ok=True)
         self.config.markdown_dir.mkdir(parents=True, exist_ok=True)
+
+        if self.config.total_timeout > 0:
+            signal.signal(signal.SIGALRM, self._handle_timeout)
+            signal.alarm(int(self.config.total_timeout))
 
         try:
             for url in self.config.individual_websites:
@@ -49,6 +59,8 @@ class WebsiteScraper:
             for root_url in self.config.wildcard_websites:
                 self._scrape_recursive(root_url)
         finally:
+            if self.config.total_timeout > 0:
+                signal.alarm(0)
             self.fetcher.close()
 
         return self.stats
@@ -77,6 +89,11 @@ class WebsiteScraper:
         self._visited.add(normalize_url(fetched.resolved_url))
         self.stats.pages_fetched += 1
 
+        resolved_url_lower = fetched.resolved_url.lower()
+        if resolved_url_lower.endswith(".pdf") or resolved_url_lower.endswith(".txt"):
+            self._download_file(fetched.resolved_url)
+            return fetched
+
         html = fetched.html
         if self.config.remove_header_footer:
             html = prune_header_footer(html)
@@ -94,6 +111,27 @@ class WebsiteScraper:
             self.sleeper(self.config.time_delay)
 
         return fetched
+
+    def _download_file(self, url: str) -> None:
+        response = requests.get(url, stream=True)
+        response.raise_for_status()
+        
+        ext = url.split(".")[-1].lower()
+        output_dir = self.config.raw_html_dir
+        
+        # Use a safe way to determine the filename/path
+        from urllib.parse import urlparse
+        parsed = urlparse(url)
+        path = parsed.path
+        if not path or path == "/":
+            path = "/index"
+            
+        file_path = output_dir / parsed.netloc / Path(path.lstrip("/"))
+        file_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        with open(file_path, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
 
     @staticmethod
     def _write_text_file(path: Path, content: str) -> None:

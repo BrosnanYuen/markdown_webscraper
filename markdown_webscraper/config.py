@@ -14,6 +14,7 @@ class ScraperConfig:
     remove_header_footer: bool
     markdown_convert: bool
     time_delay: float
+    total_timeout: float
 
 
 def _clean_url_list(urls: list[str]) -> list[str]:
@@ -33,4 +34,5 @@ def load_config(config_path: str | Path) -> ScraperConfig:
         remove_header_footer=bool(raw.get("remove_header_footer", False)),
         markdown_convert=bool(raw.get("markdown_convert", True)),
         time_delay=float(raw.get("time_delay", 0)),
+        total_timeout=float(raw.get("total_timeout",0))
     )
