@@ -1,0 +1,9 @@
+{
+    "raw_html_dir": "/home/brosnan/markdown_webscraper/raw_html/",
+    "markdown_dir": "/home/brosnan/markdown_webscraper/markdown/",
+    "wildcard_websites": ["https://www.allaboutcircuits.com/textbook", ""],
+    "individual_websites": ["https://example.com/", ""],
+    "remove_header_footer": true,
+    "markdown_convert": true,
+    "time_delay": 2
+}

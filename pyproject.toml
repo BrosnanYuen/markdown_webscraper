@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "markdown_webscraper"
+version = "0.1.0"
+description = "Scrape websites to raw HTML with Botasaurus and convert to Markdown with markdownify."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+  { name = "markdown_webscraper contributors" }
+]
+keywords = ["webscraping", "markdown", "botasaurus", "html"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Operating System :: OS Independent",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Text Processing :: Markup",
+]
+dependencies = [
+  "botasaurus>=4.0.97",
+  "markdownify>=1.2.2",
+  "beautifulsoup4>=4.14.3",
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest>=9.0.3",
+  "pytest-mock>=3.15.1",
+]
+
+[project.scripts]
+markdown-webscraper = "markdown_webscraper.cli:main"
+
+[project.urls]
+Homepage = "https://pypi.org/project/markdown_webscraper/"
+Source = "https://github.com/your-org/markdown_webscraper"
+Issues = "https://github.com/your-org/markdown_webscraper/issues"
+
+[tool.setuptools.packages.find]
+include = ["markdown_webscraper*"]
