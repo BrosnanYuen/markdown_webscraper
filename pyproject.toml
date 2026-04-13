@@ -5,14 +5,14 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "markdown_webscraper"
 version = "0.1.0"
-description = "Scrape websites to raw HTML with Botasaurus and convert to Markdown with markdownify."
+description = "Scrape websites to raw HTML with Botasaurus and convert to Markdown with markitdown."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 authors = [
   { name = "markdown_webscraper contributors" }
 ]
-keywords = ["webscraping", "markdown", "botasaurus", "html"]
+keywords = ["webscraping", "markdown", "botasaurus", "html", "pdf"]
 classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
@@ -22,7 +22,7 @@ classifiers = [
 ]
 dependencies = [
   "botasaurus>=4.0.97",
-  "markdownify>=1.2.2",
+  "markitdown[html,pdf]>=0.1.5",
   "beautifulsoup4>=4.14.3",
 ]
 

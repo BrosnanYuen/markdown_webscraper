@@ -5,7 +5,9 @@ from pathlib import Path
 from urllib.parse import urljoin, urlsplit, urlunsplit
 
 from bs4 import BeautifulSoup
-from markdownify import markdownify as md
+from markitdown import MarkItDown
+
+_markdown_converter = MarkItDown(enable_plugins=False)
 
 
 def normalize_url(url: str) -> str:
@@ -48,7 +50,9 @@ def prune_header_footer(html: str) -> str:
 
 
 def to_markdown(html: str) -> str:
-    return md(html, heading_style="ATX")
+    from io import BytesIO
+    result = _markdown_converter.convert_stream(BytesIO(html.encode("utf-8")), file_extension=".html")
+    return result.text_content
 
 
 def _safe_segment(segment: str) -> str:

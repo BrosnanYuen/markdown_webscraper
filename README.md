@@ -1,6 +1,6 @@
 # markdown_webscraper
 
-Scrape websites with `botasaurus`, save raw `.html`, then convert to `.md` with `markdownify`.
+Scrape websites with `botasaurus`, save raw `.html`, then convert `.html` and `.pdf` to `.md` with `markitdown`.
 
 ## API Reference
 

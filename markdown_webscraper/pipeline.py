@@ -8,6 +8,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
+from markitdown import MarkItDown
+
 from .config import ScraperConfig
 from .fetcher import BotasaurusFetcher, FetchedPage, PageFetcher
 from .html_utils import (
@@ -18,6 +20,8 @@ from .html_utils import (
     to_markdown,
     url_to_output_path,
 )
+
+_markdown_converter = MarkItDown(enable_plugins=False)
 
 
 @dataclass
@@ -132,6 +136,13 @@ class WebsiteScraper:
         with open(file_path, "wb") as f:
             for chunk in response.iter_content(chunk_size=8192):
                 f.write(chunk)
+        
+        if self.config.markdown_convert and ext in ("pdf", "html"):
+            with open(file_path, "rb") as f:
+                result = _markdown_converter.convert(f)
+            markdown_path = url_to_output_path(url, self.config.markdown_dir, "md")
+            self._write_text_file(markdown_path, result.text_content)
+            self.stats.markdown_files_saved += 1
 
     @staticmethod
     def _write_text_file(path: Path, content: str) -> None:
