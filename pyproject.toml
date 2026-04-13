@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "markdown_webscraper"
-version = "0.1.0"
+version = "0.1.3"
 description = "Scrape websites to raw HTML with Botasaurus and convert to Markdown with markitdown."
 readme = "README.md"
 requires-python = ">=3.10"
