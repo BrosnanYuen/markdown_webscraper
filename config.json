@@ -1,7 +1,7 @@
 {
     "raw_html_dir": "/home/brosnan/markdown_webscraper/raw_html/",
     "markdown_dir": "/home/brosnan/markdown_webscraper/markdown/",
-    "wildcard_websites": [""],
+    "wildcard_websites": ["https://www.allaboutcircuits.com/textbook", ""],
     "individual_websites": ["https://www.ti.com/lit/ds/sprs590g/sprs590g.pdf", "https://example.com/", ""],
     "remove_header_footer": true,
     "markdown_convert": true,
