@@ -37,7 +37,7 @@ markdown-webscraper = "markdown_webscraper.cli:main"
 
 [project.urls]
 Homepage = "https://pypi.org/project/markdown_webscraper/"
-Source = "https://github.com/BrosnanYuen/markdown_webscraper
+Source = "https://github.com/BrosnanYuen/markdown_webscraper"
 Issues = "https://github.com/BrosnanYuen/markdown_webscraper/issues"
 
 [tool.setuptools.packages.find]
